@@ -1,0 +1,77 @@
+---
+title: "Homework 2"
+author: "Norris Jaber"
+date: "2/19/2021"
+output: word_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+USArrests <- USArrests
+unique(USArrests)
+```
+1. In the USArrests dataframe we have a lists of states and various variables pertaining to arrest in the states respectively. We variables in the data set are Murder, Assault,  UrbanPop, and Rape. Both Murder and Rape are double class, and Assault and UrbanPop are integer class. 
+
+```{r}
+map_dbl(USArrests, max)
+```
+```{r}
+filter(USArrests, Assault == 337.0)
+```
+2. North Carolina has the largest number of assualts according the the USArrests  data frame. 
+
+3.
+```{r}
+library(nycflights13)
+flights -> flights
+flights
+```
+
+```{r}
+nrow(flights)
+ncol(flights)
+is_tibble(flights)
+```
+4. Flights is a tribble with 336,776 rows and 19 columns. It is a tribble because we can what type of data we are working with, as in what class each variable is. From the coding we can confirm that flights is a tribble. 
+
+5.
+```{r}
+map(flights, class)
+```
+6.
+```{r}
+iris <- iris
+type <- iris %>%
+  split(.$Species) %>%
+  map(~lm(Sepal.Length ~ Sepal.Width, data = .))
+type
+
+```
+7.
+```{r}
+V <- list(12,22,27,31.5,NA,39,"east")
+str(V)
+```
+a.
+```{r}
+length(V)
+```
+b.
+```{r}
+V[is.na(V)]
+```
+c.
+```{r}
+V[3]
+```
+d.
+```{r}
+V[c(7,1)]
+```
+e.
+```{r}
+str(V[[7]])
+```
+
+
