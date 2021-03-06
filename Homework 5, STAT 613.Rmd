@@ -1,0 +1,69 @@
+---
+title: "Homework 5, STAT 613"
+author: "Norris Jaber"
+date: "3/5/2021"
+output: word_document
+---
+
+```{r}
+library(tidyverse)
+library(broom)
+Stockreturns <- c(-8.36, 1.63,  -2.27, -2.93,  -2.70, 
+                  -2.93, -9.14, -2.64, 6.82,   -2.35, 
+                  -3.58,   6.13,   7.00, -15.25, -8.66,
+                  -1.03, -9.16,  -1.25, -1.22,  -10.27,
+                  -5.11, -0.80,  -1.44,  1.28,  -0.65,
+                   4.34,   12.22, -7.21, -0.09, 7.34, 
+                   5.04,  -7.24,  -2.14, -1.01,  -1.41, 
+                   12.03, -2.53,  4.33,  1.35)
+Stockreturns
+```
+1.
+```{r}
+mean(Stockreturns) -> M
+M
+```
+2.
+```{r}
+sd(Stockreturns)-> S
+S
+```
+3.
+```{r}
+pnorm(q = -1.5, mean = M, sd = S)
+```
+47.5% of returns are less than -1.5.
+
+4.
+```{r}
+1 - qnorm(p = 0.75, mean = M, sd = S)
+```
+70% of the returns are above -1.91.
+
+5.
+```{r}
+quantile(Stockreturns, prob=.25)
+summary(Stockreturns)
+```
+1st Quartile  of the data is -3.255.
+
+6.
+```{r}
+boxplot(Stockreturns)
+qqnorm(Stockreturns)
+qqline(Stockreturns)
+```
+The data appears fairly normaly from the boxplot. There does appear to be two outlier on the boxplot, however most the data looks well spread. It is unknown if these outliers are influential. From the normal qq plot,  we can see a fairly normal distribution. There does appear to to be two tails, on the right and left sides respectfully however it does not appear to deviate too much.
+
+7.
+H(0): Average return rate is equal to 0.95.
+H(A): Average return rate is less than 0.95.
+
+8.
+```{r}
+t.test(Stockreturns ,mu=0.95, alternative = "less", conf.level = .95)
+```
+At a low p-value of 0.01827 with an alpha level at 0.05 the null hypothesis should be rejected. 
+
+9.
+The broker does perform worse than average. From the p-value alone we can see that the return  rate by the broker was less than 0.95 by the rejection of the null hypothesis. Also from the 95% confidence interval, we see that the true mean of the broker's return rates are 0.4891 or less. From this we can see that the broker did perform worse. 
