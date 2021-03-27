@@ -1,0 +1,70 @@
+---
+title: "Homework 6, STAT 613"
+author: "Norris Jaber"
+date: "3/26/2021"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(dplyr)
+library(tidyverse)
+library(repurrrsive)
+listviewer::jsonedit(gh_users)
+
+```
+
+1.
+```{r}
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Title = page%>% html_nodes(".lister-item-header a")%>%
+html_text()
+
+
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Ratings = page%>% html_nodes(".ipl-rating-star.small .ipl-rating-star__rating")%>%
+  html_text()
+
+
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Runtime = page%>% html_nodes(".runtime")%>%
+  html_text()
+
+moviesdataframe = data.frame(Title,Ratings,Runtime)
+as_tibble(moviesdataframe)
+```
+2a. 
+A nested list is a list that appears as an element in another list. to the over all list, it is considered as one component, but within that one component could  be multiple components. For example would be the list of just ratings on the imdb website. In the end its just considered as a singular element of the overall list, but it actually a multiple compenent list when in regards to by itself. 
+
+2b. 
+```{r eval=FALSE}
+gh_repos
+```
+A mess is what it looks like. This is a list of all the repositories in Git Hub. It looks like a severals nested lists within an overall list. It might be for a specific user as there is a name and owner part. 
+
+2c.
+```{r}
+repos <- tibble(repo = gh_repos)
+repos
+```
+It gives us a 6x1 tribble. This tribble has components that are also lists of  varying length. So it is a 6 long  tribble of nested lists. 
+
+2d. 
+```{r}
+listviewer::jsonedit(gh_repos)
+```
+Listview allows us to go within the nested lists of the gh_repos data. It breaks down the nested lists by heirarchy, allowing us to dive in deeper into the data. It looks like within the overall 6 lists, there are 30 components. 30 represents how many components there are in the first list. 68 represents how many components there are in side 1 of the 30 components. This is a nested list inside a nested list. 
+
+2e.
+```{r}
+repos2 <- repos %>% unnest_longer(repo)
+repos3 <- repos2 %>% unnest_wider(repo)
+repos3
+```
+
